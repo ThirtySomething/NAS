@@ -1,10 +1,10 @@
 ## svnExport.sh ##
 
-On my NAS I've got an SVN server running. To backup my repositories without knowing the number of them, I'm using this script.
+On my NAS I've got an SVN server running. To backup my repositories without knowing the number or names of them, I'm using this script.
 
 ## Setup ##
 
-Before you can run the script, you have to adjust some variables. Because I'm a lazy guy, I don't pass them as parameters. At the head of the script you can see
+Before you can run the script, you have to adjust some variables. They are not passed as parameters. At the head of the script you can see
 
 <pre>
   # location of all repositories
@@ -33,7 +33,3 @@ The process is just simple but I'll explain it anyway:
 * Loop over all directories located in `VAR_PATH_SVN`
 * In case of a SVN repository, perform a SVN dump and gzip the dump
 * In case a repository is dumped, cleanup the outdated backups
-
-## Drawbacks ##
-
-* The cleanup of the outdated backups is not repository specific
