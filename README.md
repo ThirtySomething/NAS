@@ -1,6 +1,6 @@
 ## svnExport.sh ##
 
-On my NAS I've got an SVN server running. To backup my repositories without knowing the number or names of them, I'm using this script.
+On my NAS I've got a SVN server running. To backup my repositories without knowing the number or names of them, I'm using this script.
 
 ## Setup ##
 
@@ -24,7 +24,7 @@ I'm running this script as a cronjob. The entry looks like this one
 30 3 * * * root /bin/sh svnExport.sh >> svnExport.log #SVN Export
 </pre>
 
-This means that every day at half past three the backup is started.
+This means that every day at half past three the backup is started. The exported files will locate in the same directory as this script. You may need to change this...
 
 ## Processing ##
 
