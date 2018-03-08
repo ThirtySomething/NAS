@@ -7,14 +7,12 @@
 #+----------------------------------------------------------------------------+
 #| Variable definitions                                                       |
 #+----------------------------------------------------------------------------+
-# Some variables, may changed by the user
 # location of all repositories
 VAR_PATH_SVN=/volume1/subversion/*
 # maximum days to keep a backup
 INT_AGE=7
 # file extension
 STR_EXT=tgz
-# Some variables used in the script, do not change them
 # current date
 STR_DATE=$(date +%Y-%m-%d)
 # get current name of backup folder
@@ -44,7 +42,7 @@ function drop_old_exports {
 	# The + on mtime points out INT_AGE days AND OLDER
 	find ${DIR_EXPORT} -name "${PATTERN}*.$STR_EXT" -mtime +${INT_AGE} -exec rm {} \;
     set "PATTERN="	
-	echo "Deleted backups older than ${INT_AGE} days"
+	echo "`date +'%Y%m%d-%k:%M:%S'`: Deleted backups older than ${INT_AGE} days"
 	echo ""
 }
 
@@ -53,19 +51,19 @@ function drop_old_exports {
 #+----------------------------------------------------------------------------+
 function export_svn_repository {
 	VAR_DEST_NAME=$(get_svn_destination_name $1)
-	echo "Dumping repo [$1] to [$VAR_DEST_NAME]"
+	echo "`date +'%Y%m%d-%k:%M:%S'`: Dumping repo [$1] to [$VAR_DEST_NAME]"
 	svnadmin dump $1 | gzip > $VAR_DEST_NAME
 }
 
 #+----------------------------------------------------------------------------+
 #| Loop over all repositories                                                 |
 #+----------------------------------------------------------------------------+
-echo "Do export for date [$STR_DATE]"
+echo "`date +'%Y%m%d-%k:%M:%S'`: Do export for date [$STR_DATE]"
 for VAR_CURRENT_DIR in $VAR_PATH_SVN
 do
 	if [[ $(is_svn_repository $VAR_CURRENT_DIR) -eq 1 ]]
 	then
-		echo "Skip non SVN repository [$VAR_CURRENT_DIR]."
+		echo "`date +'%Y%m%d-%k:%M:%S'`: Skip non SVN repository [$VAR_CURRENT_DIR]."
 	else
 		export_svn_repository $VAR_CURRENT_DIR
 		drop_old_exports $VAR_CURRENT_DIR

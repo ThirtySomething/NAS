@@ -1,4 +1,4 @@
-## svnExport.sh ##
+# svnExport.sh #
 
 On my NAS I've got a SVN server running. To backup my repositories without knowing the number or names of them, I'm using this script.
 
@@ -33,3 +33,9 @@ The process is just simple but I'll explain it anyway:
 * Loop over all directories located in `VAR_PATH_SVN`
 * In case of a SVN repository, perform a SVN dump and gzip the dump
 * In case a repository is dumped, cleanup the outdated backups
+
+# SynopackageUninstall.sh #
+
+Synology has an internal search engine. This will read all files and build an index of them. Unfortunately my [DS411slim][DS411slim] is an old one and lacks performance to satisfy the usage of this search engine. Allthough I've uninstalled this package several times, Synology re-installs it with each firmware update. So I decided to write a script, added it in the scheduler and possible remove this performance thief once a day.
+
+[DS411slim]: https://www.synology.com/en-global/company/news/article/Synology_Unveils_DiskStation_DS411slim
