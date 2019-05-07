@@ -12,7 +12,7 @@ VAR_PATH_SVN=/volume1/subversion/*
 # maximum days to keep a backup
 INT_AGE=7
 # file extension
-STR_EXT=tgz
+STR_EXT=gz
 # current date
 STR_DATE=$(date +%Y-%m-%d)
 # get current name of backup folder
