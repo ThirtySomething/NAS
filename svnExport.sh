@@ -58,6 +58,7 @@ function export_svn_repository {
 #+----------------------------------------------------------------------------+
 #| Loop over all repositories                                                 |
 #+----------------------------------------------------------------------------+
+echo "***** Start export of SVN repositories"
 echo "`date +'%Y%m%d-%H:%M:%S'`: Do export for date [$STR_DATE]"
 for VAR_CURRENT_DIR in $VAR_PATH_SVN
 do
@@ -69,3 +70,4 @@ do
 		drop_old_exports $VAR_CURRENT_DIR
 	fi
 done
+echo ""
