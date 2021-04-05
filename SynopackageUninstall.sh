@@ -10,3 +10,4 @@ if synoservice --list-config | grep -Fq 'pkgctl-SynoFinder'; then
 	# 3rd uninstall package
 	synopkg uninstall SynoFinder
 fi
+echo ""
