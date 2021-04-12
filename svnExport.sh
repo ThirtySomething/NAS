@@ -57,13 +57,13 @@ function export_svn_repository {
 #+----------------------------------------------------------------------------+
 #| Loop over all repositories                                                 |
 #+----------------------------------------------------------------------------+
-echo "***** Start export of SVN repositories"
-echo "`date +'%Y%m%d-%H:%M:%S'`: Do export for date [$STR_DATE]"
+echo "***** Start export of SVN repositories for date [$STR_DATE]"
 for VAR_CURRENT_DIR in $VAR_PATH_SVN
 do
 	if [[ $(is_svn_repository $VAR_CURRENT_DIR) -eq 1 ]]
 	then
 		echo "`date +'%Y%m%d-%H:%M:%S'`: Skip non SVN repository [$VAR_CURRENT_DIR]."
+		echo ""
 	else
 		export_svn_repository $VAR_CURRENT_DIR
 		drop_old_exports $VAR_CURRENT_DIR
