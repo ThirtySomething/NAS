@@ -38,10 +38,9 @@ function get_svn_destination_name {
 #| Delete backups older than specified age                                    |
 #+----------------------------------------------------------------------------+
 function drop_old_exports {
-    set "PATTERN=`basename ${VAR_CURRENT_DIR}`"
+    PATTERN=`basename $1`
 	# The + on mtime points out INT_AGE days AND OLDER
-	find ${DIR_EXPORT} -name "${PATTERN}*.$STR_EXT" -mtime +${INT_AGE} -exec rm {} \;
-    set "PATTERN="	
+	find ${DIR_EXPORT} -name "${PATTERN}-*.$STR_EXT" -mtime +${INT_AGE} -exec rm {} \;
 	echo "`date +'%Y%m%d-%H:%M:%S'`: Deleted backups older than ${INT_AGE} days"
 	echo ""
 }
