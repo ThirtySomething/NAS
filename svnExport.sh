@@ -10,7 +10,7 @@
 # location of all repositories
 VAR_PATH_SVN=/volume1/subversion/*
 # maximum days to keep a backup
-INT_AGE=6
+INT_AGE=4
 # file extension
 STR_EXT=gz
 # current date
@@ -40,9 +40,9 @@ function get_svn_destination_name {
 function drop_old_exports {
     PATTERN=`basename $1`
 	# The + on mtime points out INT_AGE days AND OLDER
-	echo "find ${DIR_EXPORT} -name \"${PATTERN}-*.${STR_EXT}\" -ctime +${INT_AGE} -delete"
+	echo "`date +'%Y%m%d-%H:%M:%S'`: Delete backups older than ${INT_AGE} days"
+	find ${DIR_EXPORT} -name \"${PATTERN}-*.${STR_EXT}\" -ctime +${INT_AGE}
 	find ${DIR_EXPORT} -name "${PATTERN}-*.${STR_EXT}" -ctime +${INT_AGE} -delete
-	echo "`date +'%Y%m%d-%H:%M:%S'`: Deleted backups older than ${INT_AGE} days"
 	echo ""
 }
 
