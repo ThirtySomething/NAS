@@ -40,10 +40,10 @@ function get_svn_destination_name {
 function drop_old_exports {
     PATTERN=`basename $1`
     FTK=`expr 1 + ${INT_AGE}`
-    # The solution for deletion all files older than x days is described here
+    # The solution for keep the last x files is described here
     # https://stackoverflow.com/questions/25785/delete-all-but-the-most-recent-x-files-in-bash/25789
-    echo "`date +'%Y%m%d-%H:%M:%S'`: Delete backups older than ${INT_AGE} days"
-    echo "ls ${DIR_EXPORT}/${PATTERN}*.${STR_EXT} -tp | grep -v '/$' | tail -n +${FTK} | tr '\n' '\0' | xargs -0 rm --"
+    echo "`date +'%Y%m%d-%H:%M:%S'`: Keep the last ${INT_AGE} backups"
+    # echo "ls ${DIR_EXPORT}/${PATTERN}*.${STR_EXT} -tp | grep -v '/$' | tail -n +${FTK} | tr '\n' '\0' | xargs -0 rm --"
     ls ${DIR_EXPORT}/${PATTERN}*.${STR_EXT} -tp | grep -v '/$' | tail -n +${FTK}
     ls ${DIR_EXPORT}/${PATTERN}*.${STR_EXT} -tp | grep -v '/$' | tail -n +${FTK} | tr '\n' '\0' | xargs -0 rm --
     echo ""
@@ -61,6 +61,7 @@ function export_svn_repository {
 #+----------------------------------------------------------------------------+
 #| Loop over all repositories                                                 |
 #+----------------------------------------------------------------------------+
+echo "--------------------------------------------------------------------------------"
 echo "***** Start export of SVN repositories for date [$STR_DATE]"
 for VAR_CURRENT_DIR in $VAR_PATH_SVN
 do
