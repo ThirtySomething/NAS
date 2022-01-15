@@ -2,6 +2,32 @@
 
 Some shell scripts used in conjunction with my NAS.
 
+## pi-backup.sh
+
+I've got a running [Pi-Hole][pihole] at home. I'm using this script to get a backup of the image. It's based on the `svnExport.sh` script. The command of the backup is inspired from [here][backup].
+
+### Prerequisites
+
+You need to have remote login without password enabled as described [here][remote].
+
+### Setup
+
+Before you can run the script, you have to adjust some variables. They are not passed as arguments. At the head of the script you can see
+
+```bash
+# Remote system and user
+REM_USR=pi
+REM_SYS=192.168.71.7
+# Maximum number backups to keep
+INT_KEEP=5
+```
+
+To adjust to your needs you have to change
+
+- `REM_USR` => User of remote system
+- `REM_SYS` => Name or IP of remote system
+- `INT_KEEP` => Number of backups to keep
+
 ## svnExport.sh
 
 On my NAS I've got a SVN server running. To backup my repositories without
@@ -9,8 +35,7 @@ knowing the number or names of them, I'm using this script.
 
 ### Setup
 
-Before you can run the script, you have to adjust some variables. They are not
-passed as arguments. At the head of the script you can see
+Before you can run the script, you have to adjust some variables. They are not passed as arguments. At the head of the script you can see
 
 ```bash
 # location of all repositories
@@ -61,3 +86,6 @@ bash /volume1/homes/<USER>/SynopackageUninstall.sh >> /volume1/homes/<USER>/Syno
 ```
 
 [DS411slim]: https://www.synology.com/en-global/company/news/article/Synology_Unveils_DiskStation_DS411slim
+[backup]: https://pixelfriedhof.com/raspberry-pi-remote-backup-ueber-ssh-per-terminal-anfertigen/
+[pihole]: https://pi-hole.net/
+[remote]: http://www.linuxproblem.org/art_9.html
