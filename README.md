@@ -6,7 +6,7 @@ Some shell scripts used in conjunction with my NAS.
 
 I've got a running [Pi-Hole][pihole] at home. I'm using this script to get a backup of the image. It's based on the `svnExport.sh` script. The command of the backup is inspired from [here][backup].
 
-### Prerequisites
+### Prerequisites of pi-backup.sh
 
 You need to have remote login without password enabled as described [here][remote].
 
@@ -30,14 +30,22 @@ To adjust to your needs you have to change
 
 ## svnExport.sh
 
-On my DIY-NAS I've got a [SCM-Manager][SCM] running in a docker container. To
-backup the SVN repositories without knowing the number or names of them, I'm
-using this script.
+On my DIY-NAS I've got a [SCM-Manager][SCM] running in a docker container. To backup the SVN repositories without knowing the number or names of them, I'm using this script.
+
+### Prerequisites of svnExport.sh
+
+Before you can use the script please ensure that the following programs are installed:
+
+* subversion
+* xmlstarlet
+
+```bash
+sudo apt-get install subversion xmlstarlet
+```
 
 ### Setup
 
-Before you can run the script, you have to adjust some variables. They are not
-passed as arguments. At the head of the script you can see
+Before you can run the script, you have to adjust some variables. They are not passed as arguments. At the head of the script you can see
 
 ```bash
 # location of all repositories
@@ -57,8 +65,9 @@ DIR_EXPORT=$(dirname "${0}")
 DIR_EXPORT=$(realpath "${DIR_EXPORT}")
 ```
 
-You have to change `VAR_PATH_SVN` to the location of your repositories of
-SCM-Manager. The variable `INT_AGE` is responsible for keeping n versions of
+You have to change `VAR_PATH_SVN` to the location of your repositories of SCM-Manager. [SCM-Manager][SCM] runs as docker container on a OMV installation. The data is saved on a docker volume. The path then is `/srv/<OMV-VOLUME>/<PATH-TO-DOCKER>/<PATH-TO-VOLUME>/_data/repositories/*`
+
+The variable `INT_AGE` is responsible for keeping n versions of
 your backup files. All other variables are for internal usage.
 
 ### Running
@@ -102,6 +111,7 @@ bash /volume1/homes/<USER>/SynopackageUninstall.sh >> /volume1/homes/<USER>/Syno
 ```
 
 [DS411slim]: https://www.synology.com/en-global/company/news/article/Synology_Unveils_DiskStation_DS411slim
+[OMV]: https://www.openmediavault.org
 [SCM]: https://scm-manager.org/
 [backup]: https://pixelfriedhof.com/raspberry-pi-remote-backup-ueber-ssh-per-terminal-anfertigen/
 [pihole]: https://pi-hole.net/
