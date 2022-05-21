@@ -8,7 +8,7 @@
 #| Variable definitions                                                        |
 #+-----------------------------------------------------------------------------+
 # location of all repositories
-VAR_PATH_SVN="/srv/dev-disk-by-uuid-44c66e2f-7122-4c7c-9b2a-258139e35584/docker/volumes/scmmanager/_data/repositories/*"
+VAR_PATH_SVN="/srv/dev-disk-by-uuid-44c66e2f-7122-4c7c-9b2a-258139e35584/docker/volumes/scmmanager_scm-data/_data/repositories/*"
 # suffix for SCM organized repositories
 SUFFIX_SVN=data
 # filename containing real repository name
@@ -53,7 +53,7 @@ function get_svn_destination_name {
 #+-----------------------------------------------------------------------------+
 function drop_old_exports {
     PATTERN=$(get_svn_base_name "${1}")
-    FTK=$((1 + "${INT_AGE}"))
+    FTK=$((0 + "${INT_AGE}"))
     echo "$(date +'%Y%m%d-%H:%M:%S'): Keep the last ${INT_AGE} backups"
     COUNTER=0
     for CURRENT_DUMP in $(find "${DIR_EXPORT}" -name "${PATTERN}-*.${STR_EXT}" | sort -nr); do
@@ -80,7 +80,7 @@ function export_svn_repository {
 #+-----------------------------------------------------------------------------+
 #| Loop over all repositories                                                  |
 #+-----------------------------------------------------------------------------+
-echo "--------------------------------------------------------------------------------"
+echo "================================================================================"
 echo "***** Start export of SVN repositories for date [${STR_DATE}]"
 for VAR_CURRENT_DIR in ${VAR_PATH_SVN}; do
     SVN_REPO="${VAR_CURRENT_DIR}/${SUFFIX_SVN}"
@@ -91,5 +91,6 @@ for VAR_CURRENT_DIR in ${VAR_PATH_SVN}; do
         export_svn_repository "${SVN_REPO}"
         drop_old_exports "${SVN_REPO}"
     fi
+    echo "--------------------------------------------------------------------------------"
 done
 echo ""
