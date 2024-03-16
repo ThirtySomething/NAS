@@ -2,6 +2,14 @@
 
 Some shell scripts used in conjunction with my NAS.
 
+## docker_container_start.sh
+
+Script to check for not running docker containers. If some containers found, they're started.
+
+## docker_volume_backup.sh
+
+Script to backup volumes of docker containsers. **NOTE:** If non running containers are found, they are started.
+
 ## pi-backup.sh
 
 I've got a running [Pi-Hole][pihole] at home. I'm using this script to get a backup of the image. It's based on the `svnExport.sh` script. The command of the backup is inspired from [here][backup].
@@ -32,67 +40,7 @@ To adjust to your needs you have to change
 
 On my DIY-NAS I've got a [SCM-Manager][SCM] running in a docker container. To backup the SVN repositories without knowing the number or names of them, I'm using this script.
 
-### Prerequisites of svnExport.sh
-
-Before you can use the script please ensure that the following programs are installed:
-
-* subversion
-* xmlstarlet
-
-```bash
-sudo apt-get install subversion xmlstarlet
-```
-
-### Setup
-
-Before you can run the script, you have to adjust some variables. They are not passed as arguments. At the head of the script you can see
-
-```bash
-# location of all repositories
-VAR_PATH_SVN="/srv/dev-disk-by-uuid-44c66e2f-7122-4c7c-9b2a-258139e35584/docker/volumes/scmmanager/_data/repositories/*"
-# suffix for SCM organized repositories
-SUFFIX_SVN=data
-# filename containing real repository name
-META_SVN=metadata.xml
-# maximum days to keep a backup
-INT_AGE=5
-# file extension
-STR_EXT=gz
-# current date
-STR_DATE=$(date +%Y-%m-%d)
-# get current name of backup folder
-DIR_EXPORT=$(dirname "${0}")
-DIR_EXPORT=$(realpath "${DIR_EXPORT}")
-```
-
-You have to change `VAR_PATH_SVN` to the location of your repositories of SCM-Manager. [SCM-Manager][SCM] runs as docker container on a OMV installation. The data is saved on a docker volume. The path then is `/srv/<OMV-VOLUME>/<PATH-TO-DOCKER>/<PATH-TO-VOLUME>/_data/repositories/*`
-
-The variable `INT_AGE` is responsible for keeping n versions of
-your backup files. All other variables are for internal usage.
-
-### Running
-
-I'm running this script using the integrated task scheduler. Manually create a
-job, run it as the user `root` and enter something like this:
-
-```bash
-/bin/bash /<PATH-TO-SCRIPT>/svnExport.sh >> /<PATH-TO-SCRIPT>/svnExport.log 2>&1 &
-```
-
-The exported files will locate in the same directory as this script. You may
-need to change this...
-
-### Processing
-
-The process is just simple but I'll explain it anyway:
-
-* Loop over all directories located in `VAR_PATH_SVN`
-* Loop over all subdirectories of the path
-* In case of a SVN repository
-  * Retrieve name of repository from `metadata.xml`
-  * Perform a SVN dump and gzip the dump
-  * The determination of a SVN repository requires root privileges
-* In case a repository is dumped, cleanup the outdated backups
+This script is obsolete. Use [SCM-Backup][scm-backup] instead.
 
 ## SynopackageUninstall.sh
 
@@ -116,3 +64,4 @@ bash /volume1/homes/<USER>/SynopackageUninstall.sh >> /volume1/homes/<USER>/Syno
 [backup]: https://pixelfriedhof.com/raspberry-pi-remote-backup-ueber-ssh-per-terminal-anfertigen/
 [pihole]: https://pi-hole.net/
 [remote]: http://www.linuxproblem.org/art_9.html
+[scm-backup]: https://github.com/ThirtySomething/SCM-Backup
